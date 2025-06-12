@@ -5,20 +5,19 @@ interface Props {
     question: string
     choices: string[]
     answer: string
+    explanation: string
   }
   onAnswer: (choice: string) => void
 }
 
 export default function QuestionCard({ question, onAnswer}: Props) {
   const [selected, setSelected] = useState<string | null>(null)
+  const [showNext, setShowNext] = useState(false)
 
   function handleClick(choice: string) {
     if (selected) return
     setSelected(choice)
-    setTimeout(() => {
-      onAnswer(choice)
-      setSelected(null)
-    }, 1000)
+    setShowNext(true)
   }
 
   return (
@@ -47,6 +46,21 @@ export default function QuestionCard({ question, onAnswer}: Props) {
           )
         })}
       </ul>
+      {selected && (
+        <p style={{ marginTop: '10px', fontStyle: 'italic' }}>
+          💡{question.explanation}
+        </p>
+      )}
+
+      {showNext && (
+        <button onClick={() => {
+          onAnswer(selected!)
+          setSelected(null)
+          setShowNext(false)
+        }}>
+          Next
+        </button>
+      )}
     </div>
   )
 }

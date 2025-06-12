@@ -3,26 +3,30 @@ export interface Question {
   question: string
   choices: string[]
   answer: string
+  explanation: string
 }
 
 const mockQuestions: Question[] = [
   {
     id: 1,
-    question: "What does 'lazy' mean?",
-    choices: ['수줍은', '친절한', '화난', '게으른'],
-    answer: '게으른',
+    question: "What does '게으른' mean?",
+    choices: ['shy', 'kind', 'lazy', 'angry'],
+    answer: 'lazy',
+    explanation: "'게으른' means someone doesn't want to work or be active.",
   },
   {
     id: 2,
-    question: "What is the opposite of 'happy'?",
-    choices: ['슬픈', '신난', '피곤한', '재미있는'],
-    answer: '슬픈',
+    question: "What does '슬픈' mean?",
+    choices: ['tired', 'sad', 'excited', 'funny'],
+    answer: 'sad',
+    explanation: "'슬픈' means feeling unhappy or sorrowful",
   },
   {
     id: 3,
-    question: "What does 'polite' mean?",
-    choices: ['무례한', '예의 바른', '지저분한', '화난'],
-    answer: '예의 바른',
+    question: "What does '예의 바른' mean?",
+    choices: ['angry', 'well-mannered', 'dirty', 'rude'],
+    answer: 'well-mannered',
+    explanation: "'예의 바른' means being polite and respectful toward others.",
   },
 ]
 

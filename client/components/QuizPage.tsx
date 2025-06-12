@@ -7,6 +7,7 @@ interface Question {
   question: string
   choices: string[]
   answer: string
+  explanation: string
 }
 
 interface Props {
