@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
-import { getEnglishExplanation } from "../apis/dictionary"
+import Choices from "./Choices"
+import Explanation from "./Explanation"
+import { getEnglishExplanation } from "../../apis/dictionary"
 
 interface Question {
   question: string
@@ -11,9 +13,10 @@ interface Question {
 interface Props {
   question: Question
   onAnswer: (choice: string) => void
+  onBack: () => void
 }
 
-export default function QuestionCard({ question, onAnswer}: Props) {
+export default function QuestionCard({ question, onAnswer, onBack}: Props) {
   const [selected, setSelected] = useState<string | null>(null)
   const [showNext, setShowNext] = useState(false)
   const [explanation, setExplanation] = useState<string | null>(null)
@@ -56,49 +59,20 @@ export default function QuestionCard({ question, onAnswer}: Props) {
   return (
     <div>
       <h2>{question.question}</h2>
-      <ul>
-        {question.choices.map((choice, i) => {
-          const isCorrect = selected && choice === question.answer
-          const isWrong = selected && choice === selected && choice !== question.answer
-
-          return (
-          <li key={i}>
-            <button 
-            onClick={() => handleClick(choice)}
-            disabled={!!selected}
-            style={{
-              backgroundColor: isCorrect
-              ? 'lightgreen'
-              : isWrong
-              ? 'lightcoral'
-              : '',
-            }}
-            >{choice}
-            </button>
-          </li>
-          )
-        })}
-      </ul>
-
-      {selected && (
-        <>
-        {explanation && (
-          <p style={{ marginTop: '10px' }}>
-            <strong>Meaning:</strong> {explanation}
-          </p>
-        )}
-        {example && (
-          <p style={{ fontStyle: 'italic', marginTop: '5px' }}>
-            <strong>Example:</strong> {example}
-          </p>
-        )}
-        </>
-      )}
-
+      <Choices
+      choices={question.choices}
+      selected={selected}
+      answer={question.answer}
+      onSelect={handleClick}
+      />
+      {selected && <Explanation explanation={explanation} example={example} />}
       {showNext && (
-        <button onClick={handleNext} style={{ marginTop: '10px' }}>
-          Next
-        </button>
+        <div style={{ marginTop: '10px' }}>
+          <button onClick={onBack}>Back</button>
+          <button onClick={handleNext} style={{ marginLeft: '10px' }}>
+            Next
+          </button>
+        </div>
       )}
     </div>
   )

@@ -32,10 +32,16 @@ export default function QuizPage({ setIsFinished }: Props) {
       setIsFinished(newScore)
     }
     }
+
+  function handleBack() {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1)
+    }
+  }
   
   if (questions.length === 0) return <p>Loading questions...</p>
 
   return (
-    <QuestionCard question={questions[currentIndex]} onAnswer={handleAnswer} />
+    <QuestionCard question={questions[currentIndex]} onAnswer={handleAnswer} onBack={handleBack} />
   )
 }
