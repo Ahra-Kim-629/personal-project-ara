@@ -1,23 +1,56 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { getEnglishExplanation } from "../apis/dictionary"
+
+interface Question {
+  question: string
+  choices: string[]
+  answer: string
+  korean: string
+}
 
 interface Props {
-  question: {
-    question: string
-    choices: string[]
-    answer: string
-    explanation: string
-  }
+  question: Question
   onAnswer: (choice: string) => void
 }
 
 export default function QuestionCard({ question, onAnswer}: Props) {
   const [selected, setSelected] = useState<string | null>(null)
   const [showNext, setShowNext] = useState(false)
+  const [explanation, setExplanation] = useState<string | null>(null)
+  const [example, setExample] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!selected) return 
+      getEnglishExplanation(question.answer).then((data) => {
+        if (!data) return
+          setExplanation(data.definition)
+
+            const exampleText = data.example?.replace(
+              new RegExp(`\\b${question.answer}\\b`, 'gi'),
+              question.korean
+            )
+            setExample(exampleText || null)
+          })
+      .catch((err) => {
+        console.error('Failed to fetch explanation:', err)
+        setExplanation('Unable to load explanation.')
+        setExample(null)
+      })
+  }, [selected, question.answer, question.korean])
+
 
   function handleClick(choice: string) {
     if (selected) return
     setSelected(choice)
     setShowNext(true)
+  }
+
+  function handleNext() {
+    onAnswer(selected!)
+    setSelected(null)
+    setShowNext(false)
+    setExplanation(null)
+    setExample(null)
   }
 
   return (
@@ -46,18 +79,24 @@ export default function QuestionCard({ question, onAnswer}: Props) {
           )
         })}
       </ul>
+
       {selected && (
-        <p style={{ marginTop: '10px', fontStyle: 'italic' }}>
-          💡{question.explanation}
-        </p>
+        <>
+        {explanation && (
+          <p style={{ marginTop: '10px' }}>
+            <strong>Meaning:</strong> {explanation}
+          </p>
+        )}
+        {example && (
+          <p style={{ fontStyle: 'italic', marginTop: '5px' }}>
+            <strong>Example:</strong> {example}
+          </p>
+        )}
+        </>
       )}
 
       {showNext && (
-        <button onClick={() => {
-          onAnswer(selected!)
-          setSelected(null)
-          setShowNext(false)
-        }}>
+        <button onClick={handleNext} style={{ marginTop: '10px' }}>
           Next
         </button>
       )}

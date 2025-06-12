@@ -1,14 +1,6 @@
 import { useEffect, useState } from "react"
-import { getQuestions } from '../apis/questions'
+import { getQuestions, Question } from '../apis/questions'
 import QuestionCard from './QuestionCard'
-
-interface Question {
-  id: number
-  question: string
-  choices: string[]
-  answer: string
-  explanation: string
-}
 
 interface Props {
   setIsFinished: (finalScore: number) => void
