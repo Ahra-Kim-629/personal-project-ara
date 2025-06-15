@@ -9,6 +9,7 @@ function App() {
   const [lastScore, setLastScore] = useState<number | null>(null)
   const [wrongQuestions, setWrongQuestions] = useState<Question[]>([])
   const [retryWrongMode, setRetryWrongMode] = useState(false)
+  const [totalQuestions, setTotalQuestions] = useState<number>(0)
 
   useEffect(() => {
     const savedScore = localStorage.getItem('lastScore')
@@ -35,15 +36,20 @@ function App() {
         <h1>Korean/English Quiz!</h1>
         {lastScore !== null && <p>Last Score: {lastScore}</p>}
         {!isFinished ? (
-          <QuizPage setIsFinished={handleFinish}
+          <QuizPage setIsFinished={(score, wrongs) => {
+            handleFinish(score, wrongs)}}
+          setTotalQuestions={setTotalQuestions}
           questions={retryWrongMode ? wrongQuestions : undefined} />
         ) : (
           <ResultPage 
-          score={score} 
+          score={score}
+          total={totalQuestions}
+          wrongQuestions={wrongQuestions} 
           onRestart={handleRestart}
           onRetryWrongs={() => {
             setRetryWrongMode(true)
             setIsFinished(false)
+            setScore(0)
           }} />
         )}
       </div>

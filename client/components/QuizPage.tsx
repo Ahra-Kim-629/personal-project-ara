@@ -4,10 +4,11 @@ import QuestionCard from './QuestionCard'
 
 interface Props {
   setIsFinished: (finalScore: number, wrongs: Question[]) => void
+  setTotalQuestions: (count: number) => void
   questions?: Question[]
 }
 
-export default function QuizPage({ setIsFinished, questions: initialQuestions }: Props) {
+export default function QuizPage({ setIsFinished, setTotalQuestions, questions: initialQuestions }: Props) {
   const [questions, setQuestions] = useState<Question[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [currentScore, setCurrentScore] = useState(0)
@@ -16,13 +17,15 @@ export default function QuizPage({ setIsFinished, questions: initialQuestions }:
   useEffect(() => {
     if (initialQuestions) {
       setQuestions(initialQuestions)
+      setTotalQuestions(initialQuestions.length)
     } else {
     const fetchQuestions = async () => {
       const data = await getQuestions()
       setQuestions(data)
+      setTotalQuestions(data.length)
     }
     fetchQuestions()
-  }}, [initialQuestions])
+  }}, [initialQuestions, setTotalQuestions])
 
   function handleAnswer(choice: string) {
     const current = questions[currentIndex]
