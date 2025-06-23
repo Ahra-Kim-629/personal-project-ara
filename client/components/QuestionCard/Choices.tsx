@@ -7,7 +7,7 @@ interface Props {
 
 export default function Choices({ choices, selected, answer, onSelect }: Props) {
   return (
-    <ul>
+    <ul className="choices">
       {choices.map((choice, i) => {
         const isCorrect = selected && choice === answer
         const isWrong = selected && choice === selected && choice !== answer
@@ -17,13 +17,10 @@ export default function Choices({ choices, selected, answer, onSelect }: Props) 
             <button
             onClick={() => onSelect(choice)}
             disabled={!!selected}
-            style={{
-              backgroundColor: isCorrect
-              ? 'lightgreen'
-              : isWrong
-              ? 'lightcoral'
-              : '',
-            }}>{choice}</button>
+            className={`choice-button ${
+              isCorrect ? 'correct' : isWrong ? 'incorrect' : ''
+              }`}
+            >{choice}</button>
           </li>
         )
       })}

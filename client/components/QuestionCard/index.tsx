@@ -57,7 +57,7 @@ export default function QuestionCard({ question, onAnswer, onBack}: Props) {
   }
 
   return (
-    <div>
+    <div className="question-card">
       <h2>{question.question}</h2>
       <Choices
       choices={question.choices}
@@ -68,8 +68,8 @@ export default function QuestionCard({ question, onAnswer, onBack}: Props) {
       {selected && <Explanation explanation={explanation} example={example} />}
       {showNext && (
         <div style={{ marginTop: '10px' }}>
-          <button onClick={onBack}>Back</button>
-          <button onClick={handleNext} style={{ marginLeft: '10px' }}>
+          <button onClick={onBack} className="next-button">Back</button>
+          <button onClick={handleNext} className="next-button" style={{ marginLeft: '10px' }}>
             Next
           </button>
         </div>

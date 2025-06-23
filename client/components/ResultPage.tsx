@@ -23,20 +23,20 @@ export default function ResultPage({ score, total, wrongQuestions, onRestart, on
   }
 
   return (
-    <div>
+    <div className="result-card">
       <h2>Quiz Complete!</h2>
-      <p>Your score: <strong>{score} / {total}</strong>({percentage}%)</p>
-      <p>{message}</p>
+      <p className="result-score">Your score: <strong>{score} / {total}</strong>({percentage}%)</p>
+      <p className="result-message">{message}</p>
 
-      <button onClick={onRestart}>Restart Quiz</button>
-      <button onClick={onRetryWrongs} style={{ marginTop: '10px' }}>
+      <button onClick={onRestart} className="result-button">Restart Quiz</button>
+      <button onClick={onRetryWrongs} className="result-button">
         Retry Wrong Answers</button>
       {wrongQuestions.length > 0 && (
-        <div style={{ marginTop: '2rem' }}>
+        <div className="incorrect-list">
           <h3>Incorrect Answers</h3>
           <ul>
             {wrongQuestions.map((q, i) => (
-              <li key={i} style={{ marginBottom: '1rem' }}>
+              <li key={i}>
                 <strong>{q.question}</strong><br />
                 Correct answer: <em>{q.answer}</em>
               </li>

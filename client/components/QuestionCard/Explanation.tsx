@@ -7,12 +7,12 @@ export default function Explanation({ explanation, example }: Props) {
   return (
     <>
     {explanation && (
-      <p style={{ marginTop: '10px' }}>
+      <p className="explanation">
         <strong>Meaning:</strong> {explanation}
       </p>
     )}
     {example && (
-      <p style={{ fontStyle: 'italic', marginTop: '5px' }}>
+      <p className="explanation">
         <strong>Example:</strong> {example}
       </p>
     )}
