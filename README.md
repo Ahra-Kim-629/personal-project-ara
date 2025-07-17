@@ -1,3 +1,38 @@
+# English-Korean Word Game 
+
+A simple English-to-Korean vocabulary quiz game built with React & TypeScript.  
+This project was inspired by my own experience learning English as a second language.
+
+## Features
+
+- Shows an English word and multiple Korean translation choices  
+- Choose the correct meaning to score points  
+- Tracks your correct answers
+- Responsive design (playable on desktop and mobile)
+
+## What I learned
+
+- React component structure & props
+- TypeScript typing for state and events
+- How to build a simple quiz logic
+- How to handle user input and feedback
+
+## Tech Stack
+
+- React  
+- TypeScript  
+- CSS / Vite
+
+## Getting Started
+
+```bash
+git clone https://github.com/Ahra-Kim-629/personal-project-ara.git
+cd personal-project-ara
+npm install
+npm run dev
+
+
+
 # Boilerplate: Fullstack with Sass
 
 ## Setup
